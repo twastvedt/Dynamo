@@ -52,6 +52,7 @@
     <None Remove="Views\GuidedTour\HtmlPages\nodePackage.html" />
     <None Remove="Views\Menu\TrustedPathView.xaml" />
     <None Remove="Views\GuidedTour\HtmlPages\Resources\ConnectTheNode.gif" />
+    <None Remove="Views\Preview\Watch3DViewHydra.xaml" />
   </ItemGroup>
   <ItemGroup>
   <PackageReference Include="DynamoVisualProgramming.LibG_228_0_0" Version="2.16.0.2365" />
@@ -75,6 +76,7 @@
 	<PackageReference Include="SharpDX.Direct3D9" Version="4.2.0" />
 	<PackageReference Include="SharpDX.DXGI" Version="4.2.0" />
 	<PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />
+	<PackageReference Include="SharpGL.WPF" Version="3.1.1" />
     <Reference Include="Dynamo.Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\extern\Microsoft.Xaml.Behaviors\Dynamo.Microsoft.Xaml.Behaviors.dll</HintPath>
@@ -393,6 +395,9 @@
     <Compile Include="Views\Preview\Watch3DSettingsControl.xaml.cs">
       <DependentUpon>Watch3DSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preview\Watch3DViewHydra.xaml.cs">
+      <DependentUpon>Watch3DViewHydra.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\BrowserWindow.xaml.cs">
       <DependentUpon>BrowserWindow.xaml</DependentUpon>
     </Compile>
@@ -552,6 +557,10 @@
     <Page Include="Views\Menu\PreferencesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Preview\Watch3DViewHydra.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ExtensionWindow.xaml">
       <SubType>Designer</SubType>
