@@ -57,7 +57,7 @@ namespace Dynamo.Controls
         {
             UnregisterButtonHandlers();
 
-            CompositionTarget.Rendering -= CompositionTargetRenderingHandler;
+            //CompositionTarget.Rendering -= CompositionTargetRenderingHandler;
 
             if (ViewModel == null) return;
 
@@ -66,15 +66,15 @@ namespace Dynamo.Controls
             ViewModel.RequestCreateModels -= RequestCreateModelsHandler;
             ViewModel.RequestRemoveModels -= RequestRemoveModelsHandler;
             ViewModel.RequestViewRefresh -= RequestViewRefreshHandler;
-            ViewModel.RequestClickRay -= GetClickRay;
-            ViewModel.RequestCameraPosition -= GetCameraPosition;
+            //ViewModel.RequestClickRay -= GetClickRay;
+            //ViewModel.RequestCameraPosition -= GetCameraPosition;
             ViewModel.RequestZoomToFit -= ViewModel_RequestZoomToFit;
             DataContext = null;
         }
 
         private void RegisterEventHandlers()
         {
-            CompositionTarget.Rendering += CompositionTargetRenderingHandler;
+            //CompositionTarget.Rendering += CompositionTargetRenderingHandler;
 
             RegisterButtonHandlers();
 
@@ -83,8 +83,8 @@ namespace Dynamo.Controls
             ViewModel.RequestCreateModels += RequestCreateModelsHandler;
             ViewModel.RequestRemoveModels += RequestRemoveModelsHandler;
             ViewModel.RequestViewRefresh += RequestViewRefreshHandler;
-            ViewModel.RequestClickRay += GetClickRay;
-            ViewModel.RequestCameraPosition += GetCameraPosition;
+            //ViewModel.RequestClickRay += GetClickRay;
+            //ViewModel.RequestCameraPosition += GetCameraPosition;
             ViewModel.RequestZoomToFit += ViewModel_RequestZoomToFit;
 
             ViewModel.UpdateUpstream();
@@ -105,7 +105,7 @@ namespace Dynamo.Controls
             watch_view.MouseDown += ViewModel.OnViewMouseDown;
             watch_view.MouseUp += WatchViewMouseUphandler;
             watch_view.MouseMove += ViewModel.OnViewMouseMove;
-            watch_view.CameraChanged += WatchViewCameraChangedHandler;
+            //watch_view.CameraChanged += WatchViewCameraChangedHandler;
         }
 
         private void WatchViewCameraChangedHandler(object sender, RoutedEventArgs e)
@@ -130,7 +130,7 @@ namespace Dynamo.Controls
             watch_view.MouseDown -= ViewModel.OnViewMouseDown;
             watch_view.MouseUp -= WatchViewMouseUphandler;
             watch_view.MouseMove -= ViewModel.OnViewMouseMove;
-            watch_view.CameraChanged -= WatchViewCameraChangedHandler;
+            //watch_view.CameraChanged -= WatchViewCameraChangedHandler;
         }
 
         private void UnregisterButtonHandlers()
@@ -163,21 +163,21 @@ namespace Dynamo.Controls
 
         private void ViewModel_RequestZoomToFit(BoundingBox bounds)
         {
-            var prevcamDir = watch_view.Camera.LookDirection;
-            watch_view.ZoomExtents(bounds.ToRect3D(.05));
-            //if after a zoom the camera is in an undefined position or view direction, reset it.
-            if (watch_view.Camera.Position.ToVector3().IsUndefined() || 
-                watch_view.Camera.LookDirection.ToVector3().IsUndefined() || 
-                watch_view.Camera.LookDirection.Length == 0)
-            {
-                watch_view.Camera.Position = prevCamera;
-                watch_view.Camera.LookDirection = prevcamDir;
-            }
+            //var prevcamDir = watch_view.Camera.LookDirection;
+            //watch_view.ZoomExtents(bounds.ToRect3D(.05));
+            ////if after a zoom the camera is in an undefined position or view direction, reset it.
+            //if (watch_view.Camera.Position.ToVector3().IsUndefined() || 
+            //    watch_view.Camera.LookDirection.ToVector3().IsUndefined() || 
+            //    watch_view.Camera.LookDirection.Length == 0)
+            //{
+            //    watch_view.Camera.Position = prevCamera;
+            //    watch_view.Camera.LookDirection = prevcamDir;
+            //}
         }
 
         private void RequestViewRefreshHandler()
         {
-            View.InvalidateRender();
+            //View.InvalidateRender();
             //Call update to the clipping plane after the scene items are updated
             runUpdateClipPlane = true;
         }
@@ -222,27 +222,27 @@ namespace Dynamo.Controls
             }
         }
 
-        private void CompositionTargetRenderingHandler(object sender, EventArgs e)
-        {
-            // https://github.com/DynamoDS/Dynamo/issues/7295
-            // This should not crash Dynamo when View is null
-            try
-            {
-                //Do not call the clip plane update on the render loop if the camera is unchanged or
-                //the user is manipulating the view with mouse.  Do run when queued by runUpdateClipPlane bool 
-                if (runUpdateClipPlane || (!View.Camera.Position.Equals(prevCamera) && !View.IsMouseCaptured))
-                {
-                    ViewModel.UpdateNearClipPlane();
-                    runUpdateClipPlane = false;
-                }
-                ViewModel.ComputeFrameUpdate();
-                prevCamera = View.Camera.Position;
-            }
-            catch(Exception ex)
-            {
-                ViewModel.CurrentSpaceViewModel.DynamoViewModel.Model.Logger.Log(ex.ToString());
-            }         
-        }
+        //private void CompositionTargetRenderingHandler(object sender, EventArgs e)
+        //{
+        //    // https://github.com/DynamoDS/Dynamo/issues/7295
+        //    // This should not crash Dynamo when View is null
+        //    try
+        //    {
+        //        //Do not call the clip plane update on the render loop if the camera is unchanged or
+        //        //the user is manipulating the view with mouse.  Do run when queued by runUpdateClipPlane bool 
+        //        if (runUpdateClipPlane || (!View.Camera.Position.Equals(prevCamera) && !View.IsMouseCaptured))
+        //        {
+        //            ViewModel.UpdateNearClipPlane();
+        //            runUpdateClipPlane = false;
+        //        }
+        //        ViewModel.ComputeFrameUpdate();
+        //        prevCamera = View.Camera.Position;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        ViewModel.CurrentSpaceViewModel.DynamoViewModel.Model.Logger.Log(ex.ToString());
+        //    }         
+        //}
 
         private void MouseButtonIgnoreHandler(object sender, MouseButtonEventArgs e)
         {
@@ -268,27 +268,27 @@ namespace Dynamo.Controls
 
         #endregion
 
-        private IRay GetClickRay(MouseEventArgs args)
-        {
-            var mousePos = args.GetPosition(this);
+        //private IRay GetClickRay(MouseEventArgs args)
+        //{
+        //    var mousePos = args.GetPosition(this);
 
-            var ray = View.Point2DToRay3D(new Point(mousePos.X, mousePos.Y));
+        //    var ray = View.Point2DToRay3D(new Point(mousePos.X, mousePos.Y));
 
-            if (ray == null) return null;
+        //    if (ray == null) return null;
 
-            var position = new Point3D(0, 0, 0);
-            var normal = new Vector3D(0, 0, 1);
-            var pt3D = ray.PlaneIntersection(position, normal);
+        //    var position = new Point3D(0, 0, 0);
+        //    var normal = new Vector3D(0, 0, 1);
+        //    var pt3D = ray.PlaneIntersection(position, normal);
 
-            if (pt3D == null) return null;
+        //    if (pt3D == null) return null;
 
-            return new Ray3(ray.Origin, ray.Direction);
-        }
+        //    return new Ray3(ray.Origin, ray.Direction);
+        //}
 
-        private Point3D GetCameraPosition()
-        {
-            return View.GetCameraPosition();
-        }
+        //private Point3D GetCameraPosition()
+        //{
+        //    return View.GetCameraPosition();
+        //}
 
         /// <summary>
         /// Handles the OpenGLDraw event of the OpenGLControl control.
