@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,7 +149,7 @@ namespace Watch3DNodeModelsWpf
             watch3DView.View.ZoomExtents();
         }
 
-        private static IEnumerable<IGraphicItem> UnpackRenderData(object data)
+        protected static IEnumerable<IGraphicItem> UnpackRenderData(object data)
         {
             var item = data as IGraphicItem;
             if (item != null)
