@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,9 +12,9 @@ using ProtoCore.Mirror;
 
 namespace Dynamo.Scheduler
 {
-    class UpdateRenderPackageParams
+    public class UpdateRenderPackageParams
     {
-        internal IRenderPackageFactory RenderPackageFactory { get; set; }
+        public IRenderPackageFactory RenderPackageFactory { get; set; }
         internal string PreviewIdentifierName { get; set; }
         internal NodeModel Node { get; set; }
         internal EngineController EngineController { get; set; }
@@ -36,7 +36,7 @@ namespace Dynamo.Scheduler
     /// objects is then tagged with a label.
     /// </summary>
     /// 
-    class UpdateRenderPackageAsyncTask : AsyncTask
+    public class UpdateRenderPackageAsyncTask : AsyncTask
     {
         private const byte DefR = 0;
         private const byte DefG = 0;
@@ -54,7 +54,7 @@ namespace Dynamo.Scheduler
         private EngineController engineController;
         private IEnumerable<KeyValuePair<Guid, string>> drawableIdMap;
         private readonly RenderPackageCache renderPackageCache;
-        private IRenderPackageFactory factory;
+        public IRenderPackageFactory factory { get; set; }
 
         internal RenderPackageCache RenderPackages
         {
@@ -70,7 +70,7 @@ namespace Dynamo.Scheduler
 
         #region Public Class Operational Methods
 
-        internal UpdateRenderPackageAsyncTask(IScheduler scheduler)
+        public UpdateRenderPackageAsyncTask(IScheduler scheduler)
             : base(scheduler)
         {
             nodeGuid = Guid.Empty;
@@ -213,11 +213,11 @@ namespace Dynamo.Scheduler
                     return;
                 }
 
-                GetTessellationDataFromGraphicItem(outputPortId, graphicItem, labelKey, ref package);
+                GetTessellationDataFromGraphicItem(graphicItem, labelKey, ref package, factory);
             }
         }
 
-        private void GetTessellationDataFromGraphicItem(Guid outputPortId, IGraphicItem graphicItem, string labelKey, ref IRenderPackage package)
+        public static void GetTessellationDataFromGraphicItem(IGraphicItem graphicItem, string labelKey, ref IRenderPackage package, IRenderPackageFactory factory)
         {
             var packageWithTransform = package as ITransformable;
             var packageWithInstances = package as IInstancingRenderPackage;
@@ -312,24 +312,6 @@ namespace Dynamo.Scheduler
                     {
                         //At this point we have detected an implementation of Tessellate which is using legacy color methods
                         //We roll back the primary renderPackage to it previous state before calling tessellation again.
-                        package = RollBackPackage(package, previousPointVertexCount, previousLineVertexCount,
-                            previousMeshVertexCount);
-
-                        //Now we create a renderPackage object that will allow legacy color methods
-                        var legacyPackage = factory.CreateRenderPackage();
-                        legacyPackage.DisplayLabels = displayLabels;
-                        legacyPackage.Description = labelKey;
-                        legacyPackage.IsSelected = isNodeSelected;
-
-                        //Use it to get fill the tessellation data and add it to the render cache.
-                        GetTessellationDataFromGraphicItem(outputPortId, graphicItem, labelKey, ref legacyPackage);
-
-                        if (legacyPackage.MeshVertexColors.Any())
-                        {
-                            legacyPackage.RequiresPerVertexColoration = true;
-                        }
-
-                        renderPackageCache.Add(legacyPackage, outputPortId);
                         
                         return;
                     }
