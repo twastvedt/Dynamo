@@ -58,6 +58,7 @@ namespace Dynamo.ViewModels
         private bool isexplictFrozen;
         private bool canToggleFrozen = true;
         private bool isRenamed = false;
+        private bool isBeta = false;
         private bool isNodeInCollapsedGroup = false;
         private const string WatchNodeName = "Watch";
         private bool nodeHoveringState;
@@ -260,6 +261,23 @@ namespace Dynamo.ViewModels
                 {
                     isRenamed = value;
                     RaisePropertyChanged(nameof(IsRenamed));
+                }
+            }
+        }
+
+        /// <summary>
+        /// If a node is considered to be in a beta version.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsBeta
+        {
+            get { return isBeta; }
+            set
+            {
+                if (isBeta != value)
+                {
+                    isBeta = value;
+                    RaisePropertyChanged(nameof(IsBeta));
                 }
             }
         }

@@ -6,6 +6,9 @@
              xmlns:dynui="clr-namespace:Dynamo.UI.Controls"
              xmlns:p="clr-namespace:Dynamo.Wpf.Properties"
              xmlns:controls="clr-namespace:Dynamo.Views"
+             xmlns:viewmodels="clr-namespace:Dynamo.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             d:DataContext="{d:DesignInstance Type=viewmodels:NodeViewModel}"
              Name="topControl"
              Width="Auto"
              Height="Auto"
@@ -337,34 +340,52 @@
                 </Rectangle.Style>
             </Rectangle>
 
-            <TextBlock Name="NameBlock"
-                       Margin="6,3,6,0"
-                       VerticalAlignment="Center"
-                       Background="{x:Null}"
-                       FontFamily="{StaticResource ArtifaktElementRegular}"
-                       FontSize="16px"
-                       FontWeight="Medium"
-                       Foreground="{StaticResource PrimaryCharcoal200Brush}"
-                       IsHitTestVisible="False"
-                       Style="{StaticResource SZoomFadeText}"
-                       Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="Visible"
-                       TextAlignment="Center" />
-            <TextBox Name="EditableNameBox"
-                     Margin="6,3,6,0"
-                     VerticalAlignment="Center"
-                     Background="{x:Null}"
-                     FontFamily="{StaticResource ArtifaktElementRegular}"
-                     FontSize="16px"
-                     FontWeight="Medium"
-                     Foreground="{StaticResource PrimaryCharcoal200Brush}"
-                     SelectionBrush="{StaticResource NodeSelectionTextColor}" SelectionOpacity="0.2"
-                     IsHitTestVisible="True"
-                     BorderThickness="0"
-                     LostFocus="EditableNameBox_OnLostFocus"
-                     KeyDown="EditableNameBox_KeyDown"
-                     Visibility="Collapsed"
-                     Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="NameBlock"
+                           Margin="6,3,6,0"
+                           VerticalAlignment="Center"
+                           Background="{x:Null}"
+                           FontFamily="{StaticResource ArtifaktElementRegular}"
+                           FontSize="16px"
+                           FontWeight="Medium"
+                           Foreground="{StaticResource PrimaryCharcoal200Brush}"
+                           IsHitTestVisible="False"
+                           Style="{StaticResource SZoomFadeText}"
+                           Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                           Visibility="Visible"
+                           TextAlignment="Center" />
+                <TextBox Name="EditableNameBox"
+                         Margin="6,3,6,0"
+                         VerticalAlignment="Center"
+                         Background="{x:Null}"
+                         FontFamily="{StaticResource ArtifaktElementRegular}"
+                         FontSize="16px"
+                         FontWeight="Medium"
+                         Foreground="{StaticResource PrimaryCharcoal200Brush}"
+                         SelectionBrush="{StaticResource NodeSelectionTextColor}" SelectionOpacity="0.2"
+                         IsHitTestVisible="True"
+                         BorderThickness="0"
+                         LostFocus="EditableNameBox_OnLostFocus"
+                         KeyDown="EditableNameBox_KeyDown"
+                         Visibility="Collapsed"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <Border Background="#FF4373B3"
+                        VerticalAlignment="Center"
+                        Height="12"
+                        Padding="6,0"
+                        IsHitTestVisible="False"
+                        CornerRadius="6"
+                        Visibility="{Binding IsBeta, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <TextBlock FontSize="8px"
+                               FontWeight="Medium"
+                               VerticalAlignment="Center"
+                               FontFamily="{StaticResource ArtifaktElementRegular}"
+                               Foreground="White">
+                        Beta
+                    </TextBlock>
+                </Border>
+            </StackPanel>
             <!--  Ellipse sits within Grid to increase size of MouseOver/ToolTip area  -->
             <Grid HorizontalAlignment="Right"
                   VerticalAlignment="Center"

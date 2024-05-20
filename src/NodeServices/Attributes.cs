@@ -347,6 +347,13 @@ namespace Autodesk.DesignScript.Runtime
         }
     }
 
+    /// <summary> 
+    /// This attribute indicates the node is in a beta version.
+    /// </summary> 
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
+    public class IsBetaAttribute : Attribute
+    {
+    }
 
     /// <summary>
     /// This attribute indicates the parameter will be referenced by the return
