@@ -18,6 +18,10 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
   <PropertyGroup>
     <ApplicationIcon>logo_square_32x32.ico</ApplicationIcon>
   </PropertyGroup>

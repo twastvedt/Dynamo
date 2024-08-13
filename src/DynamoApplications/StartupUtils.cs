@@ -330,7 +330,7 @@ namespace Dynamo.Applications
                 HostAnalyticsInfo = info,
                 CLIMode = CLImode,
                 AuthProvider = CLImode || noNetworkMode ? null : new Core.IDSDKManager(),
-                StartInTestMode = CLImode,
+                StartInTestMode = false,
                 PathResolver = CreatePathResolver(CLImode, preloaderLocation, userDataFolder, commonDataFolder),
                 IsServiceMode = isServiceMode,
                 Preferences = PreferenceSettings.Instance,
